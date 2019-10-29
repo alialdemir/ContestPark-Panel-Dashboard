@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import themeConfig from '@/../themeConfig.js';
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  watch: {
+    '$store.state.theme'(val) {
+      this.toggleClassInBody(val);
+    }
+  },
+  methods: {
+    toggleClassInBody(className) {
+      if (className == 'dark') {
+        if (document.body.className.match('theme-semi-dark'))
+          document.body.classList.remove('theme-semi-dark');
+        document.body.classList.add('theme-dark');
+      } else if (className == 'semi-dark') {
+        if (document.body.className.match('theme-dark'))
+          document.body.classList.remove('theme-dark');
+        document.body.classList.add('theme-semi-dark');
+      } else {
+        if (document.body.className.match('theme-dark'))
+          document.body.classList.remove('theme-dark');
+        if (document.body.className.match('theme-semi-dark'))
+          document.body.classList.remove('theme-semi-dark');
+      }
+    }
+  },
+  mounted() {
+    this.toggleClassInBody(themeConfig.theme);
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
