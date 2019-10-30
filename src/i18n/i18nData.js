@@ -4,6 +4,9 @@ export default {
 		Dashboard: 'Dashboard',
 		Manager: 'Manager',
 		Categories: 'Categories',
-		SubCategories: 'SubCategories'
+		SubCategories: 'Subcategories',
+		Question: 'Question',
+		QuestionGenerator: 'Question Generator',
+		Music: 'Music'
 	}
 }

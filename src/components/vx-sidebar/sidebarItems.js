@@ -44,5 +44,25 @@ export default [
     slug: "SubCategories",
     icon: "MoreHorizontalIcon",
     i18n: "SubCategories",
+  }, {
+    url: null,
+    name: "QuestionGenerator",
+    slug: "QuestionGenerator",
+    icon: "UmbrellaIcon",
+    i18n: "QuestionGenerator",
+    submenu: [
+      {
+        url: '/question-generator',
+        name: "QuestionGeneratorM",
+        slug: "question",
+        i18n: "Question",
+      },
+      {
+        url: '/question-generator/music',
+        name: "questionGeneratorMusic",
+        slug: "QuestionGeneratorMusic",
+        i18n: "Music",
+      },
+    ]
   },
 ]

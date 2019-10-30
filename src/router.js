@@ -62,6 +62,14 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/question-generator',
+                    name: 'Categories',
+                    component: () => import('./views/pages/questiongenerator/QuestionGenerator.vue'),
+                    meta: {
+                        rule: 'admin'
+                    }
+                },
+                {
                     path: '/pages/not-authorized',
                     name: 'pageNotAuthorized',
                     component: () => import('@/views/pages/NotAuthorized.vue'),

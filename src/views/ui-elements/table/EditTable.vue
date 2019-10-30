@@ -2,12 +2,12 @@
   <vs-dropdown>
     <vs-button class="btn-drop" type="success-gradient" icon="more_horiz"></vs-button>
     <vs-dropdown-menu>
-      <vs-dropdown-item @click="onClickEdit(item)">
+      <vs-dropdown-item v-if="onClickEdit" @click="onClickEdit(item)">
         <feather-icon icon="EditIcon" svgClasses="w-4 h-4"></feather-icon>
         <span class="ml-2">Edit</span>
       </vs-dropdown-item>
 
-      <vs-dropdown-item divider @click="onClickDelete(item)">
+      <vs-dropdown-item v-if="onClickDelete" divider @click="onClickDelete(item)">
         <feather-icon icon="Trash2Icon" svgClasses="w-4 h-4"></feather-icon>
         <span class="ml-2">Delete</span>
       </vs-dropdown-item>

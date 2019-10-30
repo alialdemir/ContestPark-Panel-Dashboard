@@ -96,12 +96,15 @@
       :style="codeContainerStyles"
       :class="{collapsed: !showCode}"
     >
-      <div class="code-content"></div>
+      <prism language="javascript">
+        <slot name="codeContainer"></slot>
+      </prism>
     </div>
   </div>
 </template>
 
 <script>
+import Prism from 'vue-prism-component';
 export default {
   name: 'vx-card',
   props: {
@@ -147,6 +150,9 @@ export default {
       default: false,
       type: Boolean
     }
+  },
+  components: {
+    Prism
   },
   data() {
     return {
