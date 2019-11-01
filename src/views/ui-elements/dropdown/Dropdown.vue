@@ -74,6 +74,7 @@ export default {
 .parent-dropdown,
 .btn-dropdown {
   width: 100%;
+  min-width: 103px;
 }
 
 .btn-dropdown i {

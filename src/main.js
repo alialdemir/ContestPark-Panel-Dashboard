@@ -2,6 +2,8 @@
 import '@/assets/css/tailwind.css';
 // Styles: SCSS
 import '@/assets/scss/main.scss';
+// axios
+import axios from 'axios';
 // Material Icons
 import 'material-icons/iconfont/material-icons.css';
 // PrismJS
@@ -26,17 +28,19 @@ import i18n from './i18n/i18n';
 import router from './router';
 // Vuex Store
 import store from './store/store';
+// VeeValidate
+import "./vee-validate";
 
 
+Vue.prototype.$http = axios
+
+
+axios.baseURL = process.env.BASE_URL;
 
 // Feather font icon
 require('./assets/css/iconfont.css')
 
-
-
 Vue.use(require('vue-moment'));
-
-
 
 Vue.config.productionTip = false
 

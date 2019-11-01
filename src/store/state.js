@@ -28,6 +28,14 @@ const state = {
   themePrimaryColor: colors.primary,
 
   userRole: null,
+  translatedTexts: {},
+  questionAnswer: [],
+  questionLocalized: [],
+  languages: {
+    turkish: 1,
+    english: 2
+  },
+  subCategoriesDropdown: [],
 }
 
 export default state
