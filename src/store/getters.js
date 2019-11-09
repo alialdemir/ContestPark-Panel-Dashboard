@@ -7,12 +7,13 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
+import { getField } from 'vuex-map-fields';
 
 const getters = {
-
-	// COMPONENT
-		// vx-autosuggest
-	// starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
+  getField
+  // COMPONENT
+  // vx-autosuggest
+  // starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
 }
 
 export default getters

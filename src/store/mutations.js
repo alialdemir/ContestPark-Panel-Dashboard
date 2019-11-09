@@ -7,8 +7,10 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
+import { updateField } from 'vuex-map-fields';
 
 const mutations = {
+    updateField,
 
     // ////////////////////////////////////////////
     // SIDEBAR & UI UX
@@ -87,6 +89,7 @@ const mutations = {
             state.starredPages.splice(10, 0, lastItemInStarredLimited);
         }
     },
+
     /**
      * Çevrilen sorunun stateini çevirir
      * @param {*} state 
@@ -95,12 +98,14 @@ const mutations = {
     TRANSLATED_TEXT(state, data) {
         state.translatedTexts[data.textToTranslate] = data.translatedText;
     },
+
     /**
      * Soru listesini random sırala
      */
     GET_RANDOM_ANSWERS_FROM_ARRAY(state, questionAnswer) {
         state.questionAnswer.push(questionAnswer);
     },
+
     /**
      * Cevap şıkları listesini temizler
      * @param {*} state 
@@ -108,13 +113,56 @@ const mutations = {
     CLEAR_QUESTION_ANSWER(state) {
         state.questionAnswer = [];
     },
+
     /**
      * Dropdown alt kategorilerini yükler
     */
     GET_SUBCATEGORIES_DROPDOWN(state, data) {
         state.subCategoriesDropdown = data;
-    }
+    },
 
+    /**
+     * Dropdown  kategorilerini yükler
+    */
+    GET_CATEGORIES_DROPDOWN(state, data) {
+        state.categoriesDropdown = data.items;
+    },
+
+    /**
+     * Kategoriler
+     */
+    GET_CATEGORIES(state, data) {
+        state.categories = data;
+    },
+
+    /**
+     * Alt Kategoriler
+     */
+    GET_SUBCATEGORIES(state, data) {
+        state.subCategories = data;
+    },
+
+    /**
+     * Kategori ekle/güncelle formunu set eder
+     * @param {*} state 
+     */
+    DEFAULT_CATEGORY_FORM(state, data) {
+        state.categoryForm = data;
+    },
+
+    /**
+     * Alt kategori ekle/güncelle formunu set eder
+     */
+    DEFAULT_SUBCATEGORY_FORM(state, data) {
+        data.categoryIds = data.categoryIds.map((item) => {
+            return {
+                categoryId: item,
+                categoryName: item
+            }
+        });
+
+        state.subCategoryForm = data;
+    }
 }
 
 // state değiştir actionlar mutationu açağırır

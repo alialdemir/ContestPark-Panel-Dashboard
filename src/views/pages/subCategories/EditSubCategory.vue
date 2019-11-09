@@ -16,15 +16,20 @@
     <vs-divider class="mb-0"></vs-divider>
     <VuePerfectScrollbar class="scroll-area--data-list-add-new pb-6" :settings="settings">
       <div class="p-6">
+        <vs-images alternating not-border-radius not-margin hover="dark">
+          <vs-image :src="picturePath" />
+        </vs-images>
         <vs-tabs>
           <vs-tab
             :label="localized.language"
             :key="indextr"
             v-for="(localized, indextr) in localizedModels"
           >
-            <vs-input label="Category name" size="default" v-model="localized.text" />
+            <vs-input label="Subcategory name" size="default" v-model="localized.text" />
+            <vs-input label="Description" size="default" v-model="localized.description" />
           </vs-tab>
         </vs-tabs>
+
         <vs-select label="Visibility" v-model="visibility">
           <vs-select-item
             :key="index"
@@ -33,6 +38,22 @@
             v-for="(item,index) in getVisibility"
           />
         </vs-select>
+        <vs-dropdown vs-custom-content vs-trigger-click>
+          <a class="a-icon" href.prevent>
+            Categories
+            <vs-icon class icon="expand_more"></vs-icon>
+          </a>
+
+          <vs-dropdown-menu>
+            <vs-checkbox
+              v-for="(region, index) in categoriesDropdown"
+              :key="index"
+              v-model="categoryIds"
+              :vs-value="region"
+            >{{ region.categoryName }}</vs-checkbox>
+          </vs-dropdown-menu>
+        </vs-dropdown>
+        <vs-input label="Price" size="default" v-model="price" />
         <vs-input-number v-model="displayOrder" label="Display Order" />
       </div>
     </VuePerfectScrollbar>
@@ -54,16 +75,17 @@ export default {
       type: Boolean,
       required: true
     },
-    categoryId: {
+    subCategoryId: {
       type: Number,
       default: 0
     }
   },
   watch: {
-    categoryId(val) {
+    subCategoryId(val) {
       if (val && val > 0) {
-        this.$store.dispatch('getCategoryById', val);
+        this.$store.dispatch('getSubCategoryById', val);
       }
+      this.$store.dispatch('getCategoriesDropdown');
     }
   },
   data() {
@@ -91,23 +113,37 @@ export default {
       return this.$store.state.visibility;
     },
 
-    getTitle() {
-      return this.$props.categoryId > 0 ? 'EDİT CATEGORY' : 'ADD NEW CATEGORY';
+    categoriesDropdown() {
+      return this.$store.state.categoriesDropdown;
     },
-    ...mapFields(['categoryForm.visibility', 'categoryForm.displayOrder']),
-    ...mapMultiRowFields(['categoryForm.localizedModels'])
+
+    getTitle() {
+      return this.$props.categoryId > 0
+        ? 'EDİT SUBCATEGORY'
+        : 'ADD NEW SUBCATEGORY';
+    },
+    ...mapFields([
+      'subCategoryForm.visibility',
+      'subCategoryForm.picturePath',
+      'subCategoryForm.price',
+      'subCategoryForm.displayOrder',
+      'subCategoryForm.categoryIds'
+    ]),
+    ...mapMultiRowFields(['subCategoryForm.localizedModels'])
   },
   methods: {
     onSave() {
-      const categoryForm = {
-        ...this.$store.state.categoryForm,
-        categoryId: this.$props.categoryId
+      const subCategoryForm = {
+        ...this.$store.state.subCategoryForm,
+        subCategoryId: this.$props.subCategoryId
       };
 
       const url =
-        categoryForm.categoryId > 0 ? 'updateCategory' : 'addCategory';
+        subCategoryForm.subCategoryId > 0
+          ? 'updateSubCategory'
+          : 'addSubCategory';
 
-      this.$store.dispatch(url, categoryForm);
+      this.$store.dispatch(url, subCategoryForm);
       this.isSidebarActiveLocal = false;
     }
   },
@@ -138,7 +174,8 @@ export default {
 .vs-sidebar-position-right {
   right: 0 !important;
 }
-.vs-select--options.vs-select-primary {
+.vs-select--options.vs-select-primary,
+.con-vs-dropdown--menu {
   z-index: 999999;
 }
 

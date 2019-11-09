@@ -1,15 +1,15 @@
 <template>
   <div>
-    <edit-category
-      :categoryId="selectedCategoryId"
+    <edit-subCategory
+      :subCategoryId="selectedSubCategoryId"
       :isSidebarActive="addNewDataSidebar"
       @closeSidebar="addNewDataSidebar = false"
     />
     <table-pagination
       :onEdit="this.onEdit"
       :onCreate="this.onCreate"
-      title="Categories"
-      :items="getCategories"
+      title="SubCategories"
+      :items="getSubCategories"
       :headers="headers"
     ></table-pagination>
   </div>
@@ -18,44 +18,48 @@
 <script>
 import TablePagination from '../../ui-elements/table/TablePagination.vue';
 
-import EditCategory from './EditCategory.vue';
+import EditSubCategory from './EditSubCategory.vue';
 export default {
   components: {
     TablePagination,
-    EditCategory
+    EditSubCategory
   },
   computed: {
-    getCategories() {
-      return this.$store.state.categories.items || [];
+    getSubCategories() {
+      return this.$store.state.subCategories.items || [];
     }
   },
   methods: {
-    onEdit(category) {
-      this.selectedCategoryId = category.categoryId;
+    onEdit(subCategory) {
+      this.selectedSubCategoryId = subCategory.subCategoryId;
       this.addNewDataSidebar = true;
     },
     onCreate() {
-      this.selectedCategoryId = 0;
+      this.selectedSubCategoryId = 0;
       this.addNewDataSidebar = true;
     }
   },
   created() {
-    this.$store.dispatch('getCategories', {
+    this.$store.dispatch('getSubCategories', {
       pageSize: 9999,
       pageNumber: 1
     });
   },
   data: () => ({
     addNewDataSidebar: false,
-    selectedCategoryId: 0,
+    selectedSubCategoryId: 0,
     headers: [
       {
-        header: 'Category Name',
-        key: 'categoryName'
+        header: 'SubCategory Name',
+        key: 'subCategoryName'
       },
       {
         header: 'Display Order',
         key: 'displayOrder'
+      },
+      {
+        header: 'Linked Categories',
+        key: 'linkedCategories'
       },
       {
         header: 'Visibility',

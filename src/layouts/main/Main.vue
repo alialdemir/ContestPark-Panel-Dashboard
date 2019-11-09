@@ -13,7 +13,7 @@
     <vx-sidebar
       :sidebarItems="sidebarItems"
       :logo="require('@/assets/images/logo/logo.png')"
-      title="Vuesax"
+      title="ContestPark"
       parent=".layout--main"
     />
 

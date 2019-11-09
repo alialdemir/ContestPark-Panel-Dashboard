@@ -35,7 +35,12 @@ import "./vee-validate";
 Vue.prototype.$http = axios
 
 
-axios.baseURL = process.env.BASE_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+
+const token = localStorage.getItem('token') || '';
+if (token !== '') {
+  axios.defaults.headers.common.Authorization = token;
+}
 
 // Feather font icon
 require('./assets/css/iconfont.css')

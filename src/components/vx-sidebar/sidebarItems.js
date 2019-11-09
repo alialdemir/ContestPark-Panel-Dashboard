@@ -39,12 +39,13 @@ export default [
     i18n: "Categories",
   },
   {
-    url: "/subcategories",
+    url: "/SubCategories",
     name: "SubCategories",
     slug: "SubCategories",
     icon: "MoreHorizontalIcon",
     i18n: "SubCategories",
-  }, {
+  },
+  {
     url: null,
     name: "QuestionGenerator",
     slug: "QuestionGenerator",

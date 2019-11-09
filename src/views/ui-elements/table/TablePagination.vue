@@ -46,13 +46,16 @@ export default {
     headers: Array,
     items: Array,
     onEdit: {
-      type: Function
+      type: Function,
+      default: null
     },
     onCreate: {
-      type: Function
+      type: Function,
+      default: null
     },
     onDelete: {
-      type: Function
+      type: Function,
+      default: null
     },
     isCreateActive: {
       type: Boolean,
@@ -66,10 +69,10 @@ export default {
   components: { EditTable },
   methods: {
     getStatusColor(isActive) {
-      return isActive === 1 ? 'success' : 'danger';
+      return isActive === true ? 'success' : 'danger';
     },
     getStatusText(isActive) {
-      return isActive === 1 ? 'Active' : 'Passive';
+      return isActive === true ? 'Active' : 'Passive';
     },
     onClickCreate() {
       if (this.onCreate) {

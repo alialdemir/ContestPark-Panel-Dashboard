@@ -43,10 +43,6 @@ const router = new Router({
                 // =============================================================================
                 {
                     path: '/',
-                    redirect: '/dashboard'
-                },
-                {
-                    path: '/dashboard',
                     name: 'dashboard',
                     component: () => import('./views/Dashboard.vue'),
                     meta: {
@@ -57,6 +53,14 @@ const router = new Router({
                     path: '/categories',
                     name: 'Categories',
                     component: () => import('./views/pages/categories/Categories.vue'),
+                    meta: {
+                        rule: 'admin'
+                    }
+                },
+                {
+                    path: '/SubCategories',
+                    name: 'SubCategories',
+                    component: () => import('./views/pages/subCategories/SubCategories.vue'),
                     meta: {
                         rule: 'admin'
                     }

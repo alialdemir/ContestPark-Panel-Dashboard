@@ -7,7 +7,8 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-import { default as colors, default as themeConfig } from '../../themeConfig.js'
+import { default as colors, default as themeConfig } from '../../themeConfig.js';
+import Localized from '../helpers/Localized';
 
 const state = {
   isSidebarActive: true,
@@ -28,6 +29,7 @@ const state = {
   themePrimaryColor: colors.primary,
 
   userRole: null,
+  // QUESTION GENERATOR
   translatedTexts: {},
   questionAnswer: [],
   questionLocalized: [],
@@ -35,7 +37,38 @@ const state = {
     turkish: 1,
     english: 2
   },
+  localizeds: Localized,
+  visibility: [
+    {
+      text: 'Active',
+      value: 1,
+    },
+    {
+      text: 'Passive',
+      value: 0
+    }
+  ],
+  // CATEGORY
   subCategoriesDropdown: [],
+  categories: {},
+  categoryForm: {
+    categoryId: 0,
+    visibility: 0,
+    displayOrder: 0,
+    localizedModels: Localized
+  },
+  // SUBCATEGORY
+  subCategories: [],
+  categoriesDropdown: [],
+  subCategoryForm: {
+    subCategoryId: 0,
+    visibility: 0,
+    displayOrder: 0,
+    localizedModels: Localized,
+    categoryIds: [],
+    price: 0,
+    picturePath: '',
+  },
 }
 
 export default state
