@@ -15,6 +15,13 @@ const SubCategoryActions = {
     },
 
     /**
+     * Alt kategori form güncelle
+     */
+    defaultSubCategoryForm({ commit }, data) {
+        commit('DEFAULT_SUBCATEGORY_FORM', data);
+    },
+
+    /**
      * Kategoriler
      */
     async getSubCategories({ commit }, paing) {
@@ -36,15 +43,6 @@ const SubCategoryActions = {
         const { status } = await axios.post('/Category', data);
 
         if (status === 200) {
-            dispatch('DEFAULT_SUBCATEGORY_FORM', {
-                subCategoryId: 0,
-                visibility: 0,
-                displayOrder: 0,
-                localizedModels: Localized,
-                categoryIds: [],
-                price: 0,
-                picturePath: '',
-            });
             dispatch('getCategories', {
                 pageSize: 9999,
                 pageNumber: 1
@@ -52,6 +50,20 @@ const SubCategoryActions = {
         } else {
             alert('Kategori ekleme işlemi başarısız oldu.');
         }
+    },
+    /**
+     * Set default form
+     */
+    setDefaultSubCategoryForm({ commit }) {
+        commit('DEFAULT_SUBCATEGORY_FORM', {
+            subCategoryId: 0,
+            visibility: 0,
+            displayOrder: 0,
+            localizedModels: Localized.map(a => Object.assign({}, a)),
+            categoryIds: [],
+            price: 0,
+            picturePath: '',
+        });
     },
 
     /**

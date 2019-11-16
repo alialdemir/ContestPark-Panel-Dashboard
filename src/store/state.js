@@ -55,7 +55,7 @@ const state = {
     categoryId: 0,
     visibility: 0,
     displayOrder: 0,
-    localizedModels: Localized
+    localizedModels: Localized.map(a => Object.assign({}, a))
   },
   // SUBCATEGORY
   subCategories: [],
@@ -64,7 +64,7 @@ const state = {
     subCategoryId: 0,
     visibility: 0,
     displayOrder: 0,
-    localizedModels: Localized,
+    localizedModels: Localized.map(a => Object.assign({}, a)),
     categoryIds: [],
     price: 0,
     picturePath: '',

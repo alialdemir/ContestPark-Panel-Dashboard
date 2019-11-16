@@ -54,6 +54,10 @@ export default {
         key: 'subCategoryName'
       },
       {
+        header: 'Display Price',
+        key: 'displayPrice'
+      },
+      {
         header: 'Display Order',
         key: 'displayOrder'
       },

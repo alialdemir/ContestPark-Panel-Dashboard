@@ -16,9 +16,10 @@
     <vs-divider class="mb-0"></vs-divider>
     <VuePerfectScrollbar class="scroll-area--data-list-add-new pb-6" :settings="settings">
       <div class="p-6">
-        <vs-images alternating not-border-radius not-margin hover="dark">
-          <vs-image :src="picturePath" />
-        </vs-images>
+        <img class="subcategory-logo" :src="picturePath" />
+
+        <input type="file" id="file" ref="file" v-on:change="onHandleFileUpload()" />
+
         <vs-tabs>
           <vs-tab
             :label="localized.language"
@@ -38,21 +39,31 @@
             v-for="(item,index) in getVisibility"
           />
         </vs-select>
-        <vs-dropdown vs-custom-content vs-trigger-click>
-          <a class="a-icon" href.prevent>
-            Categories
-            <vs-icon class icon="expand_more"></vs-icon>
-          </a>
+        <div data-v-c0bbcde8 class="vs-component vs-con-input-label vs-input vs-input-primary">
+          <label for class="vs-input--label white">Categories</label>
+          <div class="vs-con-input">
+            <vs-dropdown
+              vs-custom-content
+              vs-trigger-click
+              style="border: 1px solid rgba(0, 0, 0, 0.2);background:#10163a;"
+              class="category-dropdown vs-inputx vs-input--input default hasValue"
+            >
+              <a class="a-icon" href.prevent>
+                Categories
+                <vs-icon class icon="expand_more"></vs-icon>
+              </a>
+              <vs-dropdown-menu>
+                <vs-checkbox
+                  v-for="(region, index) in categoriesDropdown"
+                  :key="index"
+                  v-model="categoryIds"
+                  :vs-value="region.categoryId"
+                >{{ region.categoryName }}</vs-checkbox>
+              </vs-dropdown-menu>
+            </vs-dropdown>
+          </div>
+        </div>
 
-          <vs-dropdown-menu>
-            <vs-checkbox
-              v-for="(region, index) in categoriesDropdown"
-              :key="index"
-              v-model="categoryIds"
-              :vs-value="region"
-            >{{ region.categoryName }}</vs-checkbox>
-          </vs-dropdown-menu>
-        </vs-dropdown>
         <vs-input label="Price" size="default" v-model="price" />
         <vs-input-number v-model="displayOrder" label="Display Order" />
       </div>
@@ -85,7 +96,13 @@ export default {
       if (val && val > 0) {
         this.$store.dispatch('getSubCategoryById', val);
       }
-      this.$store.dispatch('getCategoriesDropdown');
+    },
+    isSidebarActive(val) {
+      if (val) {
+        this.$store.dispatch('getCategoriesDropdown');
+      } else {
+        this.$store.dispatch('setDefaultSubCategoryForm');
+      }
     }
   },
   data() {
@@ -94,6 +111,10 @@ export default {
         // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: 0.6
+      },
+      tempPictureData: {
+        currentPath: '',
+        file: null
       }
     };
   },
@@ -132,19 +153,56 @@ export default {
     ...mapMultiRowFields(['subCategoryForm.localizedModels'])
   },
   methods: {
+    /**
+     * Alt kategori güncelle sil
+     */
     onSave() {
       const subCategoryForm = {
         ...this.$store.state.subCategoryForm,
-        subCategoryId: this.$props.subCategoryId
+        subCategoryId: this.$props.subCategoryId,
+        categoryIds: this.$store.state.subCategoryForm.categoryIds
       };
+
+      let formData = new FormData();
+      if (this.tempPictureData) {
+        formData.append('file', this.tempPictureData.file);
+      }
+
+      const keys = Object.keys(subCategoryForm);
+      keys.forEach(key => {
+        const item =
+          typeof subCategoryForm[key] === 'object'
+            ? JSON.stringify(subCategoryForm[key])
+            : subCategoryForm[key];
+
+        formData.append(key, item);
+      });
 
       const url =
         subCategoryForm.subCategoryId > 0
           ? 'updateSubCategory'
           : 'addSubCategory';
-
-      this.$store.dispatch(url, subCategoryForm);
+      this.$store.dispatch(url, formData);
       this.isSidebarActiveLocal = false;
+    },
+
+    /**
+     * Alt kategori resmi yükleme eventi
+     */
+    onHandleFileUpload() {
+      const { files } = this.$refs.file;
+      if (!files || files.length === 0) {
+        return;
+      }
+
+      this.tempPictureData.currentPath = this.$store.state.subCategoryForm.picturePath;
+
+      this.tempPictureData.file = files[0];
+
+      this.$store.dispatch('defaultSubCategoryForm', {
+        ...this.$store.state.subCategoryForm,
+        picturePath: URL.createObjectURL(this.tempPictureData)
+      });
     }
   },
   components: {
@@ -154,6 +212,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.category-dropdown {
+  text-align: left;
+
+  a {
+    color: #c2c6dc !important;
+  }
+}
 .add-new-data-sidebar {
   /deep/ .vs-sidebar--background {
     z-index: 52010;
@@ -171,6 +236,10 @@ export default {
 </style>
 
 <style lang="css">
+.subcategory-logo {
+  height: 150px;
+  width: 150px;
+}
 .vs-sidebar-position-right {
   right: 0 !important;
 }

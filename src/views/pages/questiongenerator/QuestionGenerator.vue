@@ -2,151 +2,101 @@
   <div>
     <vx-card class="mb-6" title="Question Generator" code-toggler>
       <vs-row class="pb-2" vs-w="12">
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Json File</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <input ref="fileUpload" type="file" class="input-file" @change="successUpload" />
-                  <vs-button
-                    class="btnx btn-dropdown"
-                    color="dark"
-                    size="small"
-                    type="filled"
-                    @click="$refs.fileUpload.click()"
-                  >
-                    <span>{{uploadFileName }}</span>
-                  </vs-button>
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
+        <cp-vertical-form label="Json File">
+          <input ref="fileUpload" type="file" class="input-file" @change="successUpload" />
+          <vs-button
+            class="btnx btn-dropdown"
+            color="dark"
+            size="small"
+            type="filled"
+            @click="$refs.fileUpload.click()"
+          >
+            <span>{{uploadFileName }}</span>
+          </vs-button>
+        </cp-vertical-form>
 
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Subcategory</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="getSubCategoriesDropdown" @onChanged="onSelectedCategory" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
+        <cp-vertical-form label="Subcategory">
+          <vs-select v-model="selected.category">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in getSubCategoriesDropdown"
+            />
+          </vs-select>
+        </cp-vertical-form>
+        <cp-vertical-form label="Link(Optional)">
+          <vs-select v-model="selected.link">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in answerKeys"
+            />
+          </vs-select>
+        </cp-vertical-form>
+      </vs-row>
+      <cp-vertical-form label></cp-vertical-form>
+      <vs-row class="pb-2" vs-w="12">
+        <cp-vertical-form label="Question Type">
+          <vs-select v-model="selected.questionType">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in questionTypes"
+            />
+          </vs-select>
+        </cp-vertical-form>
 
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Link(Optional)</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="answerKeys" @onChanged="onSelecLinkKey" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
+        <cp-vertical-form label="Question">
+          <vs-input class="w-full" v-model="selected.question" />
+        </cp-vertical-form>
+
+        <cp-vertical-form label="Question Language">
+          <vs-select v-model="selected.questionLanguage">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in translateTypes"
+            />
+          </vs-select>
+        </cp-vertical-form>
       </vs-row>
 
       <vs-row class="pb-2" vs-w="12">
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Question Type</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="questionTypes" @onChanged="onSelectedQuestionType" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Question</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <vs-input class="w-full" v-model="selected.question" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Question Language</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown @onChanged="onSelectedQuestionLanguage" :items="translateTypes" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-      </vs-row>
+        <cp-vertical-form label="Answer Type">
+          <vs-select v-model="selected.answerType">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in answerTypes"
+            />
+          </vs-select>
+        </cp-vertical-form>
 
-      <vs-row class="pb-2" vs-w="12">
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Answer Type</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="answerTypes" @onChanged="onSelectedAnswerType" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Answer Key</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="answerKeys" @onChanged="onSelectedKey" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
-
-        <vs-col vs-type="flex" vs-align="center" vs-lg="4" vs-sm="6" vs-xs="12">
-          <vs-row>
-            <vs-col vs-type="flex" vs-align="center" vs-w="12">
-              <vs-row>
-                <vs-col vs-type="flex" vs-align="center" vs-w="7">
-                  <span>Answer Language</span>
-                </vs-col>
-                <vs-col vs-type="flex" vs-align="center" vs-w="5">
-                  <dropdown :items="translateTypes" @onChanged="onSelectedAnswerLanguage" />
-                </vs-col>
-              </vs-row>
-            </vs-col>
-          </vs-row>
-        </vs-col>
+        <cp-vertical-form label="Answer Key">
+          <vs-select v-model="selected.answerKey">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in answerKeys"
+            />
+          </vs-select>
+        </cp-vertical-form>
+        <cp-vertical-form label="Answer Language">
+          <vs-select v-model="selected.answerLanguage">
+            <vs-select-item
+              :key="index"
+              :value="item.value"
+              :text="item.text"
+              v-for="(item,index) in translateTypes"
+            />
+          </vs-select>
+        </cp-vertical-form>
       </vs-row>
 
       <div class="vx-row pt-6">
@@ -164,12 +114,9 @@
   </div>
 </template>
 <script>
-import Dropdown from '../../ui-elements/dropdown/Dropdown.vue';
-
+import CpVerticalForm from '../../../components/vertical-form/cpVerticalForm';
 export default {
-  components: {
-    Dropdown
-  },
+  components: { CpVerticalForm },
   data() {
     return {
       selected: {
@@ -551,48 +498,6 @@ export default {
           value: item
         };
       });
-    },
-    /**
-     * Cevap tipini set eder
-     */
-    onSelectedAnswerType(key) {
-      this.selected.answerType = key;
-    },
-    /**
-     * Soru tipini set etme eventi
-     */
-    onSelectedQuestionType(key) {
-      this.selected.questionType = key;
-    },
-    /**
-     * Kategoriyi set etme eventi
-     */
-    onSelectedCategory(key) {
-      this.selected.category = key;
-    },
-    /**
-     * Cevap şıkları için oluşturulacak keyi set eder
-     */
-    onSelectedKey(key) {
-      this.selected.answerKey = key;
-    },
-    /**
-     * link keyi set eder
-     */
-    onSelecLinkKey(key) {
-      this.selected.link = key;
-    },
-    /**
-     * Dil seçmini set eder
-     */
-    onSelectedQuestionLanguage(selectedQuestionLanguage) {
-      this.selected.questionLanguage = selectedQuestionLanguage;
-    },
-    /**
-     * Dil seçmini set eder
-     */
-    onSelectedAnswerLanguage(selectedAnswerLanguage) {
-      this.selected.answerLanguage = selectedAnswerLanguage;
     }
   }
 };
@@ -605,20 +510,16 @@ export default {
 .input-file {
   display: none;
 }
-
-.upload-btn {
-  display: block;
-  text-align: center;
-  margin: 20px auto 20px;
-  width: 50%;
-  height: 30px;
-  background-color: #fcff7f;
-  line-height: 30px;
+.theme-dark .vs-button-dark.vs-button-filled {
+  background: #262c49 !important;
+  width: 100%;
+  min-height: 37px;
+}
+.theme-dark .vs-button-dark.vs-button-filled .vs-button--text span {
+  display: none;
 }
 
-.upload-btn:hover {
-  background-color: #c39d5a;
-  color: white;
-  cursor: pointer;
+.vs-inputx {
+  height: 37px;
 }
 </style>

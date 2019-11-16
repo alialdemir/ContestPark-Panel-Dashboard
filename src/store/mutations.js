@@ -154,13 +154,6 @@ const mutations = {
      * Alt kategori ekle/güncelle formunu set eder
      */
     DEFAULT_SUBCATEGORY_FORM(state, data) {
-        data.categoryIds = data.categoryIds.map((item) => {
-            return {
-                categoryId: item,
-                categoryName: item
-            }
-        });
-
         state.subCategoryForm = data;
     }
 }
