@@ -9,8 +9,10 @@ import 'material-icons/iconfont/material-icons.css';
 // PrismJS
 import 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
+import Spotify from 'spotify-web-api-node';
 // Vue
 import Vue from 'vue';
+import VueSpotify from 'vue-spotify';
 // Vuesax Component Framework
 import Vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css'; // Vuesax
@@ -30,6 +32,8 @@ import router from './router';
 import store from './store/store';
 // VeeValidate
 import "./vee-validate";
+Vue.use(VueSpotify, new Spotify())
+
 
 
 Vue.prototype.$http = axios

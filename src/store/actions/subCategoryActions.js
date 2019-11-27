@@ -39,7 +39,7 @@ const SubCategoryActions = {
      * @param {*} param0 
      * @param {*} data 
      */
-    async addCategory({ dispatch }, data) {
+    async addSubCategory({ dispatch }, data) {
         const { status } = await axios.post('/Category', data);
 
         if (status === 200) {

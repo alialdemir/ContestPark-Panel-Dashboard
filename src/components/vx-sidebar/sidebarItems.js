@@ -59,9 +59,9 @@ export default [
         i18n: "Question",
       },
       {
-        url: '/question-generator/music',
-        name: "questionGeneratorMusic",
-        slug: "QuestionGeneratorMusic",
+        url: '/music-generator',
+        name: "MusicQuestionGenerator",
+        slug: "MusicQuestionGenerator",
         i18n: "Music",
       },
     ]

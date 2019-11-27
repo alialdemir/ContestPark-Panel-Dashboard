@@ -1,4 +1,5 @@
 import CategoryActions from './actions/categoryActions';
+import SpotifyActions from './actions/musicQuestionGeneratorActions';
 import QuestionGeneratorActions from './actions/questionGeneratorActions';
 import SubCategoryActions from './actions/subCategoryActions';
 
@@ -6,6 +7,7 @@ const actions = {
     ...CategoryActions,
     ...QuestionGeneratorActions,
     ...SubCategoryActions,
+    ...SpotifyActions,
 
     // ////////////////////////////////////////////
     // SIDEBAR & UI UX

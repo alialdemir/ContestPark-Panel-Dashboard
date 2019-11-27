@@ -67,8 +67,24 @@ const router = new Router({
                 },
                 {
                     path: '/question-generator',
-                    name: 'Categories',
+                    name: 'QuestionGenerator',
                     component: () => import('./views/pages/questiongenerator/QuestionGenerator.vue'),
+                    meta: {
+                        rule: 'admin'
+                    }
+                },
+                {
+                    path: '/music-generator',
+                    name: 'MusicQuestionGenerator',
+                    component: () => import('./views/pages/questiongenerator/MusicQuestionGenerator.vue'),
+                    meta: {
+                        rule: 'admin'
+                    }
+                },
+                {
+                    path: '/callback',
+                    name: 'MusicQuestionGenerator',
+                    component: () => import('./views/pages/questiongenerator/MusicQuestionGenerator.vue'),
                     meta: {
                         rule: 'admin'
                     }

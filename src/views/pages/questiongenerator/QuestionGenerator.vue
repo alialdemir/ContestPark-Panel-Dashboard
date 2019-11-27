@@ -246,7 +246,7 @@ export default {
     },
     async onTesting() {
       this.questions = [];
-
+debugger
       this.$store.dispatch('clearQuestionAnswer');
 
       //   const selectedAnswerKey = this.selected.answerKey.value;
@@ -403,7 +403,7 @@ export default {
       this.getJsonQuestion.forEach(item => {
         const correctStylish = item[selectedAnswerKey];
 
-        this.$store.dispatch('getRandomAnswersFromArray', {
+this.$store.dispatch('getRandomAnswersFromArray', {
           answers: onlyAnswerKeyItems,
           correctStylish,
           link: item[this.selected.link.value] || '',
