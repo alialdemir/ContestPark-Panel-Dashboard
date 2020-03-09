@@ -30,8 +30,6 @@ const state = {
 
   userRole: null,
   // QUESTION GENERATOR
-  translatedTexts: {},
-  questionAnswer: [],
   questionLocalized: [],
   languages: {
     turkish: 1,

@@ -91,35 +91,12 @@ const mutations = {
         }
     },
 
-    /**
-     * Çevrilen sorunun stateini çevirir
-     * @param {*} state 
-     * @param {*} list çevrilen soru
-     */
-    TRANSLATED_TEXT(state, data) {
-        state.translatedTexts[data.textToTranslate] = data.translatedText;
-    },
-
-    /**
-     * Soru listesini random sırala
-     */
-    GET_RANDOM_ANSWERS_FROM_ARRAY(state, questionAnswer) {
-        state.questionAnswer.push(questionAnswer);
-    },
-
-    /**
-     * Cevap şıkları listesini temizler
-     * @param {*} state 
-     */
-    CLEAR_QUESTION_ANSWER(state) {
-        state.questionAnswer = [];
-    },
 
     /**
      * Dropdown alt kategorilerini yükler
     */
     GET_SUBCATEGORIES_DROPDOWN(state, data) {
-        state.subCategoriesDropdown = data;
+        state.subCategoriesDropdown = data.items;
     },
 
     /**

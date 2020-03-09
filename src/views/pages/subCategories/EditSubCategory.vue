@@ -174,9 +174,12 @@ export default {
           typeof subCategoryForm[key] === 'object'
             ? JSON.stringify(subCategoryForm[key])
             : subCategoryForm[key];
-
-        formData.append(key, item);
+        if (key !== 'picturePath') {
+          formData.append(key, item);
+        }
       });
+
+      formData.append('picturePath', '#');
 
       const url =
         subCategoryForm.subCategoryId > 0

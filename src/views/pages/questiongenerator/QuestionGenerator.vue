@@ -16,11 +16,11 @@
         </cp-vertical-form>
 
         <cp-vertical-form label="Subcategory">
-          <vs-select v-model="selected.category">
+          <vs-select v-model="selected.subCategoryId">
             <vs-select-item
               :key="index"
-              :value="item.value"
-              :text="item.text"
+              :value="item.subCategoryId"
+              :text="item.subCategoryName"
               v-for="(item,index) in getSubCategoriesDropdown"
             />
           </vs-select>
@@ -102,14 +102,8 @@
       <div class="vx-row pt-6">
         <div class="vx-col w-full">
           <vs-button color="danger" class="mr-3 mb-2" @click="onSubmit">Load questions</vs-button>
-          <vs-button color="warning" type="border" class="mb-2" @click="onTesting">Testing</vs-button>
         </div>
       </div>
-      <template slot="codeContainer">{{ selected.jsonQuestions }}</template>
-    </vx-card>
-
-    <vx-card class="mb-6" title="Questions" code-toggler>
-      <template slot="codeContainer">{{ questions }}</template>
     </vx-card>
   </div>
 </template>
@@ -120,7 +114,8 @@ export default {
   data() {
     return {
       selected: {
-        category: { text: 'Choose!', value: 0 },
+        file: null,
+        subCategoryId: { text: 'Choose!', value: 0 },
         questionType: { text: 'Choose!', value: 0 },
         answerType: { text: 'Choose!', value: 0 },
         answerKey: { text: 'Choose!', value: '' },
@@ -160,56 +155,32 @@ export default {
       ],
       translateTypes: [
         {
+          text: 'None',
+          value: 0
+        },
+        {
           text: 'Turkish to English',
-          value: 'tr:en'
+          value: 1
         },
         {
           text: 'English to Turkish',
-          value: 'en:tr'
-        },
-        {
-          text: 'None',
-          value: 'none'
+          value: 2
         }
-      ],
-      questions: []
+      ]
     };
   },
+
   computed: {
-    getHeaders() {
-      return this.getJsonQuestionKeys().map(item => {
-        return {
-          header: item,
-          key: item
-        };
-      });
-    },
-    /**
-     * Cevap şıklarından boş olanları filtrelerek döndürür
-     */
-    getJsonQuestion() {
-      const selectedAnswerKey = this.selected.answerKey.value;
-
-      return this.selected.jsonQuestions.filter(item => {
-        const val = item[selectedAnswerKey];
-
-        return typeof val !== 'undefined' && val !== '';
-      });
-    },
-    getQuestionAnswer() {
-      return this.$store.state.questionAnswer;
-    },
-    getTranslatedTexts() {
-      return this.$store.state.translatedTexts;
-    },
     getLanguages() {
       return this.$store.state.languages;
     },
+
     getSubCategoriesDropdown() {
       return this.$store.state.subCategoriesDropdown;
     },
+
     getAnswerLanguage() {
-      const selectedAnswerLanguage = this.selected.answerLanguage.value;
+      const selectedAnswerLanguage = this.selected.answerLanguage;
       const splitLanguage = selectedAnswerLanguage.split(':');
       const source = splitLanguage[0];
 
@@ -222,8 +193,9 @@ export default {
             : this.getLanguages.turkish
       };
     },
+
     getQuestionLanguage() {
-      const selectedQuestionLanguage = this.selected.questionLanguage.value;
+      const selectedQuestionLanguage = this.selected.questionLanguage;
       const splitLanguage = selectedQuestionLanguage.split(':');
       const source = splitLanguage[0];
 
@@ -237,213 +209,94 @@ export default {
       };
     }
   },
+
   created() {
     this.$store.dispatch('getSubCategoriesDropdown');
   },
+
   methods: {
     onSubmit() {
-      this.validateForm();
-    },
-    async onTesting() {
-      this.questions = [];
-debugger
-      this.$store.dispatch('clearQuestionAnswer');
-
-      //   const selectedAnswerKey = this.selected.answerKey.value;
-      this.answerRandomSort();
-
-      for (let i = 0; i < this.getQuestionAnswer.length; i++) {
-        const item = this.getQuestionAnswer[i];
-        const questionLanguage = this.getQuestionLanguage.language;
-        const question = item.question;
-
-        this.questions.push({
-          questionLocalized: [
-            {
-              language: questionLanguage,
-              question
-            },
-            {
-              language:
-                questionLanguage === this.getLanguages.english
-                  ? this.getLanguages.turkish
-                  : this.getLanguages.english,
-              question: await this.translateQuestion(
-                question,
-                this.getQuestionLanguage.target,
-                this.getQuestionLanguage.source
-              )
-            }
-          ],
-          answers: [
-            {
-              language: item.language,
-              correctStylish: item.correctStylish,
-              stylish1: item.stylish1,
-              stylish2: item.stylish2,
-              stylish3: item.stylish3
-            },
-            {
-              language: this.getLanguages.english,
-              correctStylish: await this.translateAnswer(
-                item.correctStylish,
-                this.getAnswerLanguage.target,
-                this.getAnswerLanguage.source
-              ),
-              stylish1: await this.translateAnswer(
-                item.stylish1,
-                this.getAnswerLanguage.target,
-                this.getAnswerLanguage.source
-              ),
-              stylish2: await this.translateAnswer(
-                item.stylish2,
-                this.getAnswerLanguage.target,
-                this.getAnswerLanguage.source
-              ),
-              stylish3: await this.translateAnswer(
-                item.stylish3,
-                this.getAnswerLanguage.target,
-                this.getAnswerLanguage.source
-              )
-            }
-          ],
-          questions: [
-            {
-              questionType: this.selected.questionType.value,
-              answerTypes: this.selected.answerType.value,
-              subCategoryId: this.selected.category.value,
-              link: item.link
-            }
-          ]
-        });
+      if (!this.validateForm()) {
+        return;
       }
+
+      const questionForm = {
+        ...this.selected
+      };
+      let formData = new FormData();
+      if (this.selected.file) {
+        formData.append('file', this.selected.file);
+      }
+
+      const keys = Object.keys(this.selected);
+      keys.forEach(key => {
+        const item =
+          typeof questionForm[key] === 'object'
+            ? JSON.stringify(questionForm[key])
+            : questionForm[key];
+        if (key !== 'file') {
+          formData.append(key, item);
+        }
+      });
+
+      this.$store.dispatch('addQuestions', formData);
     },
+
     /**
      * Form validation
      */
     validateForm() {
       if (this.answerKeys.length === 0) {
         alert('Please load a json file');
-        return;
+
+        return false;
       }
 
-      if (this.selected.category.value === 0) {
+      if (this.selected.subCategoryId.value === 0) {
         alert('Select subcategory id');
-        return;
+
+        return false;
       }
 
       if (this.selected.questionType.value === 0) {
         alert('Select question type');
-        return;
+
+        return false;
       }
 
       if (this.selected.question === '') {
         alert('Write a question');
-        return;
+
+        return false;
       }
 
       if (this.selected.questionLanguage.value === '') {
         alert('Select question language');
-        return;
+
+        return false;
       }
 
       if (this.selected.answerType.value === 0) {
         alert('Select answer type');
-        return;
+
+        return false;
       }
 
       if (this.selected.answerKey.value === '') {
         alert('Select answer key');
-        return;
+
+        return false;
       }
 
       if (this.selected.answerLanguage.value === '') {
         alert('Select answer language');
-        return;
+
+        return false;
       }
 
       return true;
     },
-    translateAnswer(textToTranslate, target, source) {
-      if (this.selected.answerLanguage.value === 'none') {
-        return textToTranslate;
-      }
 
-      return this.translateText(textToTranslate, target, source);
-    },
-    translateQuestion(textToTranslate, target, source) {
-      if (this.selected.questionLanguage === 'none') {
-        return textToTranslate;
-      }
-
-      return this.translateText(textToTranslate, target, source);
-    },
-    /**
-     * Çeviri işlemi yapar
-     */
-    async translateText(textToTranslate, target, source) {
-      const translatedTexts = this.getTranslatedTexts[textToTranslate];
-      if (translatedTexts !== undefined) {
-        return translatedTexts;
-      }
-
-      return await this.$store.dispatch('translate', {
-        textToTranslate,
-        target,
-        source
-      });
-    },
-    /*
-     * Şıkları random sıraları şekilde array oluşturur
-     */
-    answerRandomSort() {
-      const selectedAnswerKey = this.selected.answerKey.value;
-      const onlyAnswerKeyItems = this.getOnlyAnswerKeyItems();
-
-      this.getJsonQuestion.forEach(item => {
-        const correctStylish = item[selectedAnswerKey];
-
-this.$store.dispatch('getRandomAnswersFromArray', {
-          answers: onlyAnswerKeyItems,
-          correctStylish,
-          link: item[this.selected.link.value] || '',
-          question: this.replaceQuestionFields(item),
-          language:
-            this.getQuestionLanguage.language === this.getLanguages.english
-              ? this.getLanguages.english
-              : this.getLanguages.turkish
-        });
-      });
-    },
-
-    replaceQuestionFields(item) {
-      const replaceQuestion =
-        this.selected.question.match(/[^{{\\}]+(?=}})/g) || [];
-      let question = this.selected.question;
-      for (let j = 0; j < replaceQuestion.length; j++) {
-        const replaceField = replaceQuestion[j];
-        const fieldValue = item[replaceField];
-
-        question = this.selected.question.replace(
-          `{{${replaceField}}}`,
-          fieldValue
-            .toLowerCase()
-            .charAt(0)
-            .toUpperCase() + fieldValue.substr(1).toLowerCase()
-        );
-      }
-
-      return question;
-    },
-
-    /**
-     * Oluşturulacak soruların sadece cevap şıklarını verir
-     */
-    getOnlyAnswerKeyItems() {
-      const selectedAnswerKey = this.selected.answerKey.value;
-
-      return this.getJsonQuestion.map(item => item[selectedAnswerKey]);
-    },
     /**
      * jSON Soru yükleme
      */
@@ -461,7 +314,10 @@ this.$store.dispatch('getRandomAnswersFromArray', {
         that.loadQuestionKeys(e.target.result);
       };
       reader.readAsText(files[0]);
+
+      this.selected.file = files[0];
     },
+
     /**
      * Yüklenen soruların object keylerini  verir
      */
@@ -472,6 +328,7 @@ this.$store.dispatch('getRandomAnswersFromArray', {
 
       return Object.keys(this.selected.jsonQuestions[0]);
     },
+
     /**
      * Yüklenen json dosyasındaki objecnin keylerini dropdown için yüklen
      */

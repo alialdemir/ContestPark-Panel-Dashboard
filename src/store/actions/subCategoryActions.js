@@ -40,15 +40,15 @@ const SubCategoryActions = {
      * @param {*} data 
      */
     async addSubCategory({ dispatch }, data) {
-        const { status } = await axios.post('/Category', data);
+        const { status } = await axios.post('/SubCategory', data);
 
         if (status === 200) {
-            dispatch('getCategories', {
+            dispatch('getSubCategories', {
                 pageSize: 9999,
                 pageNumber: 1
             });
         } else {
-            alert('Kategori ekleme işlemi başarısız oldu.');
+            alert('Alt kategori ekleme işlemi başarısız oldu.');
         }
     },
     /**
