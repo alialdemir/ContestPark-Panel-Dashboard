@@ -107,6 +107,19 @@ const router = new Router({
                 }
             ]
         },
+        {
+            path: 'Login',
+            component: () => import('@/views/pages/login/Login.vue'),
+            children: [
+                // =============================================================================
+                // Login Routes
+                // =============================================================================
+                {
+                    path: '/Login',
+                    name: 'Login',
+                },
+            ]
+        },
         // Redirect to 404 page, if no match found
         {
             path: '*',

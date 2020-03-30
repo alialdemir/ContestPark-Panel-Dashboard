@@ -50,6 +50,10 @@ export default {
     selectedSubCategoryId: 0,
     headers: [
       {
+        header: 'Id',
+        key: 'subCategoryId'
+      },
+      {
         header: 'SubCategory Name',
         key: 'subCategoryName'
       },

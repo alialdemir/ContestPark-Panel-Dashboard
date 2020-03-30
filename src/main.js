@@ -36,7 +36,7 @@ import "./vee-validate";
 Vue.prototype.$http = axios
 
 
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL_DOMAIN;
 
 const token = localStorage.getItem('token') || '';
 if (token !== '') {

@@ -67,6 +67,8 @@ const state = {
     price: 0,
     picturePath: '',
   },
+  // LOGIN
+  smsCode: 0,
 }
 
 export default state

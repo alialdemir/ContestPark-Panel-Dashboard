@@ -133,6 +133,13 @@ const mutations = {
      */
     DEFAULT_SUBCATEGORY_FORM(state, data) {
         state.subCategoryForm = data;
+    },
+
+    /**
+     * SMS ile gelen kod state değiştir
+     */
+    CHANGE_SMSCODE(state, smsCode) {
+        state.smsCode = smsCode;
     }
 }
 

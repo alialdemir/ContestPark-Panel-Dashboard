@@ -48,8 +48,8 @@ export default {
         spotifyQuestionType: { text: 'Choose!', value: 0 }
       },
       spotifyQuestionTypes: [
-        { text: 'Playlist', value: 'Playlist' },
-        { text: 'Artist', value: 'Artist' }
+        { text: 'Playlist', value: 1 },
+        { text: 'Artist', value: 2 }
       ]
     };
   },
