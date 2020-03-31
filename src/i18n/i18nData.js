@@ -2,11 +2,11 @@
 export default {
 	en: {
 		Dashboard: 'Dashboard',
-		Manager: 'Manager',
-		Categories: 'Categories',
-		SubCategories: 'SubCategories',
-		Question: 'Question',
-		QuestionGenerator: 'Question Generator',
-		Music: 'Music'
+		Manager: 'Yönetim',
+		Categories: 'Kategoriler',
+		SubCategories: 'Alt Kategoriler',
+		Question: 'Soru Oluştur',
+		QuestionGenerator: 'Soru oluşturma',
+		Music: 'Spotify'
 	}
 }

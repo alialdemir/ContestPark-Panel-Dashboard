@@ -38,9 +38,11 @@ Vue.prototype.$http = axios
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL_DOMAIN;
 
-const token = localStorage.getItem('token') || '';
-if (token !== '') {
-  axios.defaults.headers.common.Authorization = token;
+// TODO: local storagedeki token şifrelenmeli
+const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+if (currentUser && currentUser.access_token !== '' && currentUser.token_type !== '') {
+  axios.defaults.headers.common.Authorization = `${currentUser.token_type} ${currentUser.access_token}`;
+  axios.defaults.headers.common['Accept-Language'] = 'tr-TR';
 }
 
 // Feather font icon
@@ -52,10 +54,13 @@ Vue.config.productionTip = false
 
 Vue.use(Vuesax)
 
-new Vue({
+const vm = new Vue({
   router,
   store,
   i18n,
   acl,
   render: h => h(App),
 }).$mount('#app')
+
+export { vm };
+

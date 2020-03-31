@@ -135,10 +135,33 @@ router.afterEach(() => {
         appLoading.style.display = "none";
     }
 })
-/* login ve yetki kontrol buradan yapılıyor
-router.beforeEach((to, from, next) => {
-   
 
-});*/
+// login ve yetki kontrol buradan yapılıyor
+router.beforeEach((to, from, next) => {
+
+    // get current user
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const isSignIn = currentUser && currentUser.token_type && currentUser.access_token;
+
+    if (to.path === '/login' && isSignIn) {
+        router.push({ path: '/', query: { to: to.path } })
+
+        return next();
+    }
+
+    if (
+        to.path === "/login" ||
+        isSignIn
+    ) {
+        return next();
+    }
+
+    router.push({ path: '/login', query: { to: to.path } })
+    // Specify the current path as the customState parameter, meaning it
+    // will be returned to the application after auth
+    // auth.login({ target: to.path });
+
+
+});
 
 export default router

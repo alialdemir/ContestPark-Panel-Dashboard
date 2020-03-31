@@ -5,7 +5,7 @@
         <vs-input class="w-full" v-model="selectedMusicQuestion.spotifyId" />
       </cp-vertical-form>
 
-      <cp-vertical-form label="Spotify question type">
+      <cp-vertical-form label="Spotify soru tipi">
         <vs-select v-model="selectedMusicQuestion.spotifyQuestionType">
           <vs-select-item
             :key="index"
@@ -16,7 +16,7 @@
         </vs-select>
       </cp-vertical-form>
 
-      <cp-vertical-form label="Subcategory">
+      <cp-vertical-form label="Alt Kategori">
         <vs-select v-model="selectedMusicQuestion.subCategoryId">
           <vs-select-item
             :key="index"
@@ -30,7 +30,7 @@
 
     <div class="vx-row pt-6">
       <div class="vx-col w-full">
-        <vs-button color="danger" class="mr-3 mb-2" @click="onSubmit">Generate Music Questions</vs-button>
+        <vs-button color="danger" class="mr-3 mb-2" @click="onSubmit">Şarkı Sorular Oluştur!</vs-button>
       </div>
     </div>
   </vx-card>
@@ -44,8 +44,8 @@ export default {
     return {
       selectedMusicQuestion: {
         spotifyId: '',
-        subCategoryId: { text: 'Choose!', value: 0 },
-        spotifyQuestionType: { text: 'Choose!', value: 0 }
+        subCategoryId: { text: 'Seç!', value: 0 },
+        spotifyQuestionType: { text: 'Seç!', value: 0 }
       },
       spotifyQuestionTypes: [
         { text: 'Playlist', value: 1 },

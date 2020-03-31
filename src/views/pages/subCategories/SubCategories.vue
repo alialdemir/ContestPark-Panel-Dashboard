@@ -8,7 +8,7 @@
     <table-pagination
       :onEdit="this.onEdit"
       :onCreate="this.onCreate"
-      title="SubCategories"
+      title="Alt Kategoriler"
       :items="getSubCategories"
       :headers="headers"
     ></table-pagination>
@@ -54,33 +54,33 @@ export default {
         key: 'subCategoryId'
       },
       {
-        header: 'SubCategory Name',
+        header: 'Alt Kategori Adı',
         key: 'subCategoryName'
       },
       {
-        header: 'Display Price',
+        header: 'Gösterim Fiyatı',
         key: 'displayPrice'
       },
       {
-        header: 'Display Order',
+        header: 'Gösterim Sırası',
         key: 'displayOrder'
       },
       {
-        header: 'Linked Categories',
+        header: 'İlişkili Kategori Sayısı',
         key: 'linkedCategories'
       },
       {
-        header: 'Visibility',
+        header: 'Aktif/Pasif',
         key: 'visibility',
         type: 'status'
       },
       {
-        header: 'Modified Date',
+        header: 'Güncellenme Tarihi',
         key: 'modifiedDate',
         type: 'date'
       },
       {
-        header: 'Created Date',
+        header: 'Oluşturulma Tarihi',
         key: 'createdDate',
         type: 'date'
       }

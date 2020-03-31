@@ -4,7 +4,7 @@
       class="vx-col flex items-center justify-center flex-col sm:w-1/2 md:w-3/5 lg:w-3/4 xl:w-1/2 mx-auto text-center"
     >
       <img
-        src="../../assets/images/pages/not-authorized.png"
+        src="../../assets/images/not-authorized.png"
         alt="graphic-not-authorized"
         class="mx-auto mb-4"
       />

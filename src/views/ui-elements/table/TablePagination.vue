@@ -10,7 +10,7 @@
       type="border"
     >
       <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-      <span class="ml-2 text-base text-primary">Add New</span>
+      <span class="ml-2 text-base text-primary">Yeni Ekle</span>
     </vs-button>
 
     <vs-table max-items="10" pagination :data="items">
@@ -72,7 +72,7 @@ export default {
       return isActive === true ? 'success' : 'danger';
     },
     getStatusText(isActive) {
-      return isActive === true ? 'Active' : 'Passive';
+      return isActive === true ? 'Aktif' : 'Pasif';
     },
     onClickCreate() {
       if (this.onCreate) {
@@ -92,7 +92,7 @@ export default {
       return [
         {
           key: '',
-          header: 'Actions'
+          header: 'İşlemler'
         },
         ...this.headers
       ];

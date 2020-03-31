@@ -26,7 +26,6 @@
         <div class="the-navbar__user-meta flex items-center">
           <div class="text-right leading-tight hidden sm:block">
             <p class="font-semibold">{{ user_displayName }}</p>
-            <small>Available</small>
           </div>
           <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
             <div class="con-img ml-3">
@@ -34,15 +33,6 @@
                 v-if="activeUserImg.startsWith('http')"
                 key="onlineImg"
                 :src="activeUserImg"
-                alt="user-img"
-                width="40"
-                height="40"
-                class="rounded-full shadow-md cursor-pointer block"
-              />
-              <img
-                v-else
-                key="localImg"
-                :src="require(`@/assets/images/portrait/small/${activeUserImg}`)"
                 alt="user-img"
                 width="40"
                 height="40"
@@ -138,7 +128,22 @@ export default {
         this.showBookmarkPagesDropdown = false;
     }
   },
+
+  created() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser) {
+      this.$store.dispatch('setCurrentUser', currentUser);
+    }
+  },
+
   computed: {
+    /**
+     * Şuanki kullanıcı bilgisi
+     */
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
+
     // HELPER
     sidebarWidth() {
       return this.$store.state.sidebarWidth;
@@ -174,13 +179,10 @@ export default {
 
     // PROFILE
     user_displayName() {
-      return JSON.parse(localStorage.getItem('userInfo') || '{}').displayName;
+      return this.currentUser.fullName;
     },
     activeUserImg() {
-      return (
-        JSON.parse(localStorage.getItem('userInfo') || '{}').photoURL ||
-        this.$store.state.AppActiveUser.img
-      );
+      return this.currentUser.profilePicturePath;
     }
   },
   methods: {
@@ -242,20 +244,16 @@ export default {
       return 'Just Now';
     },
     logout() {
-      // if user is logged in via auth0
-      if (this.$auth.profile) this.$auth.logOut();
+      // TODO: bizim çıkış yap apisine istek atılmalı
 
-      // if user is looged in via firebase
-      const firebaseCurrentUser = true; // çıkış yap isteği at
+      localStorage.removeItem('currentUser');
 
-      if (firebaseCurrentUser) {
-        this.$router.push('/pages/login');
-        localStorage.removeItem('userInfo');
-      }
+      this.$router.push('/login');
+
       // Change role on logout. Same value as initialRole of acj.js
       this.$acl.change('admin');
-      localStorage.removeItem('userRole');
     },
+
     outside: function() {
       this.showBookmarkPagesDropdown = false;
     },
@@ -286,3 +284,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.con-vs-dropdown--menu {
+  z-index: 99999;
+}
+</style>

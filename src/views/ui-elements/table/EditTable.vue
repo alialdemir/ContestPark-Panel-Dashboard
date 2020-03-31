@@ -4,12 +4,12 @@
     <vs-dropdown-menu>
       <vs-dropdown-item v-if="onEdit" @click="onClickEdit(item)">
         <feather-icon icon="EditIcon" svgClasses="w-4 h-4"></feather-icon>
-        <span class="ml-2">Edit</span>
+        <span class="ml-2">Güncelle</span>
       </vs-dropdown-item>
 
       <vs-dropdown-item v-if="onDelete" divider @click="onClickDelete(item)">
         <feather-icon icon="Trash2Icon" svgClasses="w-4 h-4"></feather-icon>
-        <span class="ml-2">Delete</span>
+        <span class="ml-2">Sil</span>
       </vs-dropdown-item>
     </vs-dropdown-menu>
   </vs-dropdown>

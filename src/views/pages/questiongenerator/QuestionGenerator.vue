@@ -2,7 +2,7 @@
   <div>
     <vx-card class="mb-6" title="Question Generator" code-toggler>
       <vs-row class="pb-2" vs-w="12">
-        <cp-vertical-form label="Json File">
+        <cp-vertical-form label="Json Dosyası">
           <input ref="fileUpload" type="file" class="input-file" @change="successUpload" />
           <vs-button
             class="btnx btn-dropdown"
@@ -15,7 +15,7 @@
           </vs-button>
         </cp-vertical-form>
 
-        <cp-vertical-form label="Subcategory">
+        <cp-vertical-form label="Alt Kategori">
           <vs-select v-model="selected.subCategoryId">
             <vs-select-item
               :key="index"
@@ -25,7 +25,7 @@
             />
           </vs-select>
         </cp-vertical-form>
-        <cp-vertical-form label="Link(Optional)">
+        <cp-vertical-form label="Link(İsteğe bağlı)">
           <vs-select v-model="selected.link">
             <vs-select-item
               :key="index"
@@ -38,7 +38,7 @@
       </vs-row>
       <cp-vertical-form label></cp-vertical-form>
       <vs-row class="pb-2" vs-w="12">
-        <cp-vertical-form label="Question Type">
+        <cp-vertical-form label="Soru tipi">
           <vs-select v-model="selected.questionType">
             <vs-select-item
               :key="index"
@@ -49,11 +49,11 @@
           </vs-select>
         </cp-vertical-form>
 
-        <cp-vertical-form label="Question">
+        <cp-vertical-form label="Soru">
           <vs-input class="w-full" v-model="selected.question" />
         </cp-vertical-form>
 
-        <cp-vertical-form label="Question Language">
+        <cp-vertical-form label="Soru Dili">
           <vs-select v-model="selected.questionLanguage">
             <vs-select-item
               :key="index"
@@ -66,7 +66,7 @@
       </vs-row>
 
       <vs-row class="pb-2" vs-w="12">
-        <cp-vertical-form label="Answer Type">
+        <cp-vertical-form label="Cevap Tipi">
           <vs-select v-model="selected.answerType">
             <vs-select-item
               :key="index"
@@ -77,7 +77,7 @@
           </vs-select>
         </cp-vertical-form>
 
-        <cp-vertical-form label="Answer Key">
+        <cp-vertical-form label="Cevap Anahtarı">
           <vs-select v-model="selected.answerKey">
             <vs-select-item
               :key="index"
@@ -87,7 +87,7 @@
             />
           </vs-select>
         </cp-vertical-form>
-        <cp-vertical-form label="Answer Language">
+        <cp-vertical-form label="Cevap Dili">
           <vs-select v-model="selected.answerLanguage">
             <vs-select-item
               :key="index"
@@ -115,18 +115,18 @@ export default {
     return {
       selected: {
         file: null,
-        subCategoryId: { text: 'Choose!', value: 0 },
-        questionType: { text: 'Choose!', value: 0 },
-        answerType: { text: 'Choose!', value: 0 },
-        answerKey: { text: 'Choose!', value: '' },
-        link: { text: 'Choose!', value: '' },
+        subCategoryId: { text: 'Seç!', value: 0 },
+        questionType: { text: 'Seç!', value: 0 },
+        answerType: { text: 'Seç!', value: 0 },
+        answerKey: { text: 'Seç!', value: '' },
+        link: { text: 'Seç!', value: '' },
         question: '',
         questionLanguage: {
-          text: 'Choose!',
+          text: 'Seç!',
           value: ''
         },
         answerLanguage: {
-          text: 'Choose!',
+          text: 'Seç!',
           value: ''
         },
         jsonQuestions: []
@@ -247,49 +247,49 @@ export default {
      */
     validateForm() {
       if (this.answerKeys.length === 0) {
-        alert('Please load a json file');
+        alert('Lütfen json dosyası yükleyiniz!');
 
         return false;
       }
 
       if (this.selected.subCategoryId.value === 0) {
-        alert('Select subcategory id');
+        alert('Alt kategori seçiniz!');
 
         return false;
       }
 
       if (this.selected.questionType.value === 0) {
-        alert('Select question type');
+        alert('Soru tipi seçiniz!');
 
         return false;
       }
 
       if (this.selected.question === '') {
-        alert('Write a question');
+        alert('Soruyu yazınız!');
 
         return false;
       }
 
       if (this.selected.questionLanguage.value === '') {
-        alert('Select question language');
+        alert('Soru dili seçiniz!');
 
         return false;
       }
 
       if (this.selected.answerType.value === 0) {
-        alert('Select answer type');
+        alert('Cevap tipi seçiniz!');
 
         return false;
       }
 
       if (this.selected.answerKey.value === '') {
-        alert('Select answer key');
+        alert('Cevap anahtarı seçiniz!');
 
         return false;
       }
 
       if (this.selected.answerLanguage.value === '') {
-        alert('Select answer language');
+        alert('Cevap dili seçiniz!');
 
         return false;
       }

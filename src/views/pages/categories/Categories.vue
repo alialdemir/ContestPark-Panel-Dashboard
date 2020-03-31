@@ -8,7 +8,7 @@
     <table-pagination
       :onEdit="this.onEdit"
       :onCreate="this.onCreate"
-      title="Categories"
+      title="Kategoriler"
       :items="getCategories"
       :headers="headers"
     ></table-pagination>
@@ -50,25 +50,25 @@ export default {
     selectedCategoryId: 0,
     headers: [
       {
-        header: 'Category Name',
+        header: 'Kategori Adı',
         key: 'categoryName'
       },
       {
-        header: 'Display Order',
+        header: 'Gösterim Sırası',
         key: 'displayOrder'
       },
       {
-        header: 'Visibility',
+        header: 'Aktif/Pasif',
         key: 'visibility',
         type: 'status'
       },
       {
-        header: 'Modified Date',
+        header: 'Güncellenme Tarihi',
         key: 'modifiedDate',
         type: 'date'
       },
       {
-        header: 'Created Date',
+        header: 'Oluşturulma Tarihi',
         key: 'createdDate',
         type: 'date'
       }

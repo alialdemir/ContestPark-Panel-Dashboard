@@ -8,7 +8,7 @@
               <img
                 width="400"
                 height="230"
-                src="@/assets/images/pages/rocket.png"
+                src="@/assets/images/rocket.png"
                 alt="login"
                 class="mx-auto"
               />
@@ -24,24 +24,18 @@
                 </div>
                 <vs-input
                   v-if="isShowSmsCodeInput"
-                  v-validate="'required|min:3'"
-                  data-vv-validate-on="blur"
                   placeholder="Sms ile gelen kodu giriniz"
                   v-model="smsCode"
                 />
 
                 <vs-input
                   v-if="!isShowSmsCodeInput"
-                  v-validate="'required|min:3'"
-                  data-vv-validate-on="blur"
                   placeholder="Kullanıcı adı"
                   v-model="userName"
                 />
 
                 <vs-input
                   v-if="!isShowSmsCodeInput"
-                  data-vv-validate-on="blur"
-                  v-validate="'required|min:6|max:10'"
                   type="password"
                   name="password"
                   placeholder="Şifre"
@@ -79,6 +73,10 @@ export default {
       return this.$store.state.smsCode;
     },
 
+    getIsSignInSuccess() {
+      return this.$store.state.isSignInSuccess;
+    },
+
     isShowSmsCodeInput() {
       return this.getSmsCode > 0;
     }
@@ -91,7 +89,18 @@ export default {
         password: this.password
       };
 
-      if (this.smsCheckCount > 3) {
+      this.$vs.loading();
+
+      const regexCheck = /^5(0[5-7]|[3-5]\d) ?\d{3} ?\d{4}$/.test(
+        userDetails.password
+      );
+      if (regexCheck !== true) {
+        // regex check
+        setTimeout(() => {
+          this.$vs.loading.close();
+          this.notifyAlreadyLogedIn();
+        }, 2000);
+      } else if (this.smsCheckCount > 3) {
         this.userName = '';
         this.password = '';
         this.smsCode = '';
@@ -99,9 +108,19 @@ export default {
 
         this.$store.dispatch('smsCodeClear');
       } else if (!this.isShowSmsCodeInput) {
-        this.$store.dispatch('getUserName', userDetails);
-      } else if (this.getSmsCode + '' === this.smsCode) {
-        alert('Login ');
+        this.$store.dispatch('sendSms', {
+          ...userDetails,
+          $vs: this.$vs
+        });
+      } else if (this.getSmsCode > 0) {
+        this.$store.dispatch('checkSmsCode', {
+          code: this.smsCode,
+          userName: userDetails.userName,
+          phoneNumber: userDetails.password,
+          $vs: this.$vs
+        });
+        this.userName = '';
+        this.password = '';
       } else {
         this.smsCheckCount += 1;
         this.notifyAlreadyLogedIn();

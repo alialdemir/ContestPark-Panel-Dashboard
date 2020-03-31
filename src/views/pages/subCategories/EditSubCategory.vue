@@ -26,12 +26,12 @@
             :key="indextr"
             v-for="(localized, indextr) in localizedModels"
           >
-            <vs-input label="Subcategory name" size="default" v-model="localized.text" />
-            <vs-input label="Description" size="default" v-model="localized.description" />
+            <vs-input label="Alt Kategori Adı" size="default" v-model="localized.text" />
+            <vs-input label="Açıklama" size="default" v-model="localized.description" />
           </vs-tab>
         </vs-tabs>
 
-        <vs-select label="Visibility" v-model="visibility">
+        <vs-select label="Aktif/Pasif" v-model="visibility">
           <vs-select-item
             :key="index"
             :value="item.value"
@@ -49,7 +49,7 @@
               class="category-dropdown vs-inputx vs-input--input default hasValue"
             >
               <a class="a-icon" href.prevent>
-                Categories
+                İlişkili Kategoriler
                 <vs-icon class icon="expand_more"></vs-icon>
               </a>
               <vs-dropdown-menu>
@@ -64,14 +64,14 @@
           </div>
         </div>
 
-        <vs-input label="Price" size="default" v-model="price" />
-        <vs-input-number v-model="displayOrder" label="Display Order" />
+        <vs-input label="Fiyat" size="default" v-model="price" />
+        <vs-input-number v-model="displayOrder" label="Gösterim Sırası" />
       </div>
     </VuePerfectScrollbar>
 
     <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
-      <vs-button class="mr-6" color="success" @click="onSave">Save</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" color="success" @click="onSave">Kaydet</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">İptal</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -140,8 +140,8 @@ export default {
 
     getTitle() {
       return this.$props.categoryId > 0
-        ? 'EDİT SUBCATEGORY'
-        : 'ADD NEW SUBCATEGORY';
+        ? 'ALT KATEGORİ GÜNCELLE'
+        : 'ALT KATEGORİ EKLE';
     },
     ...mapFields([
       'subCategoryForm.visibility',

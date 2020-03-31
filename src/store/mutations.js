@@ -140,7 +140,21 @@ const mutations = {
      */
     CHANGE_SMSCODE(state, smsCode) {
         state.smsCode = smsCode;
-    }
+    },
+
+    /**
+     * login işlemi başarılı mı
+     */
+    CHANGE_SINGIN_SUCCESS(state, isSignInSuccess) {
+        state.isSignInSuccess = isSignInSuccess;
+    },
+    /*
+    Aktif kullanıcı bilgileri
+    */
+    CHANGE_CURRENT_USER(state, currentUser) {
+        state.currentUser = currentUser;
+    },
+
 }
 
 // state değiştir actionlar mutationu açağırır

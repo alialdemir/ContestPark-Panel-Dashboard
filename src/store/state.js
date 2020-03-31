@@ -38,11 +38,11 @@ const state = {
   localizeds: Localized,
   visibility: [
     {
-      text: 'Active',
+      text: 'Aktif',
       value: 1,
     },
     {
-      text: 'Passive',
+      text: 'Pasif',
       value: 0
     }
   ],
@@ -68,7 +68,11 @@ const state = {
     picturePath: '',
   },
   // LOGIN
+  currentUser: {
+    access_token: ''
+  },
   smsCode: 0,
+  isSignInSuccess: false
 }
 
 export default state

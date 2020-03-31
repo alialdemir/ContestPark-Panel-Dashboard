@@ -22,10 +22,10 @@
             :key="indextr"
             v-for="(localized, indextr) in localizedModels"
           >
-            <vs-input label="Category name" size="default" v-model="localized.text" />
+            <vs-input label="Kategori Adı" size="default" v-model="localized.text" />
           </vs-tab>
         </vs-tabs>
-        <vs-select label="Visibility" v-model="visibility">
+        <vs-select label="Aktif/Pasif" v-model="visibility">
           <vs-select-item
             :key="index"
             :value="item.value"
@@ -33,13 +33,13 @@
             v-for="(item,index) in getVisibility"
           />
         </vs-select>
-        <vs-input-number v-model="displayOrder" label="Display Order" />
+        <vs-input-number v-model="displayOrder" label="Gösterim Sırası" />
       </div>
     </VuePerfectScrollbar>
 
     <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
-      <vs-button class="mr-6" color="success" @click="onSave">Save</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" color="success" @click="onSave">Kaydet</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">İptal</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -92,7 +92,7 @@ export default {
     },
 
     getTitle() {
-      return this.$props.categoryId > 0 ? 'EDİT CATEGORY' : 'ADD NEW CATEGORY';
+      return this.$props.categoryId > 0 ? 'KATEGORİ GÜNCELLE' : 'KATEGORİ EKLE';
     },
     ...mapFields(['categoryForm.visibility', 'categoryForm.displayOrder']),
     ...mapMultiRowFields(['categoryForm.localizedModels'])
