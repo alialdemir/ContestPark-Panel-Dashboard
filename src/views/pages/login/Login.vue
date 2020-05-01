@@ -40,7 +40,7 @@
                   name="password"
                   placeholder="Şifre"
                   v-model="password"
-                  class="w-full mt-6"
+                  class="mt-6"
                 />
 
                 <vs-button class="float-right" :disabled="!validateForm" @click="login">Giriş Yap</vs-button>
@@ -110,14 +110,16 @@ export default {
       } else if (!this.isShowSmsCodeInput) {
         this.$store.dispatch('sendSms', {
           ...userDetails,
-          $vs: this.$vs
+          $vs: this.$vs,
+          $cookies: this.$cookies
         });
       } else if (this.getSmsCode > 0) {
         this.$store.dispatch('checkSmsCode', {
           code: this.smsCode,
           userName: userDetails.userName,
           phoneNumber: userDetails.password,
-          $vs: this.$vs
+          $vs: this.$vs,
+          $cookies: this.$cookies
         });
         this.userName = '';
         this.password = '';

@@ -26,7 +26,7 @@
           </vs-select>
         </cp-vertical-form>
         <cp-vertical-form label="Link(İsteğe bağlı)">
-          <vs-select v-model="selected.link">
+          <vs-select v-model="selected.linkKey">
             <vs-select-item
               :key="index"
               :value="item.value"
@@ -119,7 +119,7 @@ export default {
         questionType: { text: 'Seç!', value: 0 },
         answerType: { text: 'Seç!', value: 0 },
         answerKey: { text: 'Seç!', value: '' },
-        link: { text: 'Seç!', value: '' },
+        linkKey: '',
         question: '',
         questionLanguage: {
           text: 'Seç!',
@@ -220,6 +220,8 @@ export default {
         return;
       }
 
+      this.$vs.loading();
+      
       const questionForm = {
         ...this.selected
       };
@@ -234,12 +236,15 @@ export default {
           typeof questionForm[key] === 'object'
             ? JSON.stringify(questionForm[key])
             : questionForm[key];
-        if (key !== 'file') {
+        if (key !== 'file' && key !== 'jsonQuestions') {
           formData.append(key, item);
         }
       });
 
-      this.$store.dispatch('addQuestions', formData);
+      this.$store.dispatch('addQuestions', {
+        data: formData,
+        $vs: this.$vs
+      });
     },
 
     /**

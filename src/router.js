@@ -19,6 +19,7 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
+import { getCurrentUser } from './helpers/auth';
 
 
 Vue.use(Router)
@@ -127,7 +128,6 @@ const router = new Router({
         }
     ],
 })
-
 router.afterEach(() => {
     // Remove initial loading
     const appLoading = document.getElementById('loading-bg')
@@ -136,11 +136,11 @@ router.afterEach(() => {
     }
 })
 
+
 // login ve yetki kontrol buradan yapılıyor
 router.beforeEach((to, from, next) => {
-
+    const currentUser = getCurrentUser();
     // get current user
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     const isSignIn = currentUser && currentUser.token_type && currentUser.access_token;
 
     if (to.path === '/login' && isSignIn) {
@@ -155,7 +155,7 @@ router.beforeEach((to, from, next) => {
     ) {
         return next();
     }
-
+    debugger
     router.push({ path: '/login', query: { to: to.path } })
     // Specify the current path as the customState parameter, meaning it
     // will be returned to the application after auth

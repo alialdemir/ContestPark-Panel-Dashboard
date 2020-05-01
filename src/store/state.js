@@ -69,7 +69,8 @@ const state = {
   },
   // LOGIN
   currentUser: {
-    access_token: ''
+    access_token: '',
+    profilePicturePath: ''
   },
   smsCode: 0,
   isSignInSuccess: false

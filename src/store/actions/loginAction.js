@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { setCurrentUser } from '../../helpers/auth';
 import { vm } from '../../main';
+
 const apiUrlDomain = process.env.VUE_APP_BASE_API_URL;
 const apiUrl = `${process.env.VUE_APP_BASE_API_URL}${process.env.VUE_APP_BASE_VERSION}`;
 const clientId = process.env.VUE_APP_CLIENT_ID;
@@ -34,7 +36,8 @@ const categoryActions = {
             .then((response) => {
                 dispatch('userInfo', {
                     ...response.data,
-                    $vs: loginInfo.$vs
+                    $vs: loginInfo.$vs,
+                    $cookies: loginInfo.$cookies
                 });
 
                 loginInfo.$vs.loading.close();
@@ -121,7 +124,8 @@ const categoryActions = {
             .then(response => dispatch('login', {
                 userName: response.data.userName,
                 password: data.phoneNumber,
-                $vs: data.$vs
+                $vs: data.$vs,
+                $cookies: data.$cookies
             }))
             .catch(() => {
                 data.$vs.loading.close();
@@ -152,8 +156,7 @@ const categoryActions = {
      */
     setCurrentUser({ commit }, token) {
         if (token && token.token_type && token.access_token) {
-            // TODO: token şifrele
-            localStorage.setItem('currentUser', JSON.stringify(token));
+            setCurrentUser(token);
 
             commit('CHANGE_CURRENT_USER', token);
         }

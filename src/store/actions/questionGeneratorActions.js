@@ -5,13 +5,32 @@ const questionGeneratorActions = {
        * Yeni soru ekle
        */
     async addQuestions({ commit }, questions) {
-        const { status } = await axios.post('/Question', questions);
+        const { status } = await axios.post('/Question', questions.data);
 
         if (status === 200) {
-            alert('Sorular eklendi.');
+            questions.$vs.loading.close();
+            questions.$vs.notify({
+                time: 2500,
+                title: 'Başarılı!',
+                text: "Sorular eklendi!",
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'success'
+            });
+
+            setTimeout(() => location.reload(), 3000);
         }
-        if (status === 5001) {
-            commit('test');
+        else {
+            questions.$vs.loading.close();
+            questions.$vs.notify({
+                time: 2500,
+                title: 'Error!',
+                text: "Sorular eklenemedi",
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+            });
+
         }
     },
 

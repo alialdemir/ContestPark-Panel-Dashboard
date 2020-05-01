@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { getCurrentUser, removeCurrentUser } from '../../helpers/auth';
+
 export default {
   name: 'the-navbar',
   props: {
@@ -130,7 +132,7 @@ export default {
   },
 
   created() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const currentUser = getCurrentUser();
     if (currentUser) {
       this.$store.dispatch('setCurrentUser', currentUser);
     }
@@ -246,7 +248,7 @@ export default {
     logout() {
       // TODO: bizim çıkış yap apisine istek atılmalı
 
-      localStorage.removeItem('currentUser');
+      removeCurrentUser();
 
       this.$router.push('/login');
 
