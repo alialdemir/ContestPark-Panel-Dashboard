@@ -1,4 +1,4 @@
-# contestpark-admin-dashboard
+# contestpark-panel-dashboard
 
 ## Project setup
 ```
