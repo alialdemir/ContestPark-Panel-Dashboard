@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const questionGeneratorActions = {
     /**
-       * Yeni soru ekle
-       */
-    async addQuestions({ commit }, questions) {
+     * Yeni soru ekle
+     */
+    async addQuestions(questions) {
         const { status } = await axios.post('/Question', questions.data);
 
         if (status === 200) {
@@ -19,8 +19,7 @@ const questionGeneratorActions = {
             });
 
             setTimeout(() => location.reload(), 3000);
-        }
-        else {
+        } else {
             questions.$vs.loading.close();
             questions.$vs.notify({
                 time: 2500,
