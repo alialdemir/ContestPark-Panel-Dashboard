@@ -10,10 +10,10 @@
 import { getField } from 'vuex-map-fields';
 
 const getters = {
-  getField
-  // COMPONENT
-  // vx-autosuggest
-  // starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
+    getField,
+    // COMPONENT
+    // vx-autosuggest
+    // starredPages: state => state.navbarSearchAndPinList.data.filter((page) => page.highlightAction),
 }
 
 export default getters

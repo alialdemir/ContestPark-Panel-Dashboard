@@ -57,7 +57,7 @@ const mutations = {
     UPDATE_STARRED_PAGE(state, payload) {
         // find item index in search list state
         const index = state.navbarSearchAndPinList.data.findIndex((item) => item.index == payload.index)
-        // update the main list
+            // update the main list
         state.navbarSearchAndPinList.data[index].highlightAction = payload.val;
 
         // if val is true add it to starred else remove
@@ -66,7 +66,7 @@ const mutations = {
         } else {
             // find item index from starred pages
             const index = state.starredPages.findIndex((item) => item.index == payload.index)
-            // remove item using index
+                // remove item using index
             state.starredPages.splice(index, 1);
         }
     },
@@ -94,14 +94,14 @@ const mutations = {
 
     /**
      * Dropdown alt kategorilerini yükler
-    */
+     */
     GET_SUBCATEGORIES_DROPDOWN(state, data) {
         state.subCategoriesDropdown = data.items;
     },
 
     /**
      * Dropdown  kategorilerini yükler
-    */
+     */
     GET_CATEGORIES_DROPDOWN(state, data) {
         state.categoriesDropdown = data.items;
     },
